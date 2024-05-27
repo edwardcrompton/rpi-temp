@@ -10,6 +10,7 @@ Loads two classes:
 
 ### Set the modules and classnames for the environment.
 `export PERSISTENCECLASS="googlesheets.PersistToGoogleSheets"`
+
 `export DATAPOINTCLASS="temperature.temperature"`
 
 ### Set up Google Sheets API authentication
