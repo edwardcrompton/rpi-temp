@@ -3,7 +3,7 @@
 Wrapper for the Raspberry Pi temperature monitor
 
 Loads two classes:
- - A data point class. This is used to fetch the datapoint we want to write somewhere with a timestamp.
+ - A data point class. This is used to fetch the datapoint we want to write somewhere with a timestamp. E.g. the temperature fetched from the thermometer.
  - A persistence class. This is used to write the datapoint and the timestamp somewhere where it will be persisted, e.g the Google Sheets API
 
 ## Setup
