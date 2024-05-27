@@ -11,7 +11,7 @@ Loads two classes:
 ### Set the modules and classnames for the environment.
 `export PERSISTENCECLASS="googlesheets.PersistToGoogleSheets"`
 
-`export DATAPOINTCLASS="temperature.temperature"`
+`export DATAPOINTCLASS="temperature.Temperature"`
 
 ### Set up Google Sheets API authentication
 Go to https://console.cloud.google.com
