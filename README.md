@@ -25,7 +25,7 @@ Export credentials to a file and rename it key.json in this folder.
 Based on https://hands-on.cloud/python-google-sheets-api/?utm_content=cmp-true which also describes how to get up the Google API for this to work.
 
 ### Plugins
-Additional modules can be added to the plugins directory to provide different persistence and datapoint classes. Just change the values of PERSISTENCECLASS and DATAPOINTCLASS to point to the plugin using the format <modulename>.<classname>.
+Additional modules can be added to the plugins directory to provide different persistence and datapoint classes. Just change the values of PERSISTENCECLASS and DATAPOINTCLASS to point to the plugin using the format `<modulename>.<classname>`.
 
 The classes must be instances of the datapointinterface or the persistenceinterface abstract classes.
 
