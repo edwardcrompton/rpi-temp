@@ -12,6 +12,7 @@ Loads two classes in modules within the plugins folder:
 
 ### Set the modules and classnames for the environment.
 `export PERSISTENCECLASS="googlesheets.PersistToGoogleSheets"`
+
 `export DATAPOINTCLASS="temperature.Temperature"`
 
 ### Set up Google Sheets API authentication
