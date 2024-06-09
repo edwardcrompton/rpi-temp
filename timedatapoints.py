@@ -3,7 +3,8 @@ import importlib
 import importlib.machinery
 import importlib.util
 import sys
-import time 
+import time
+from pathlib import Path
 
 from datapointinterface import DatapointInterface
 from persistenceinterface import PersistenceInterface
@@ -35,11 +36,13 @@ def main():
 # dynamic import  
 def dynamic_imp(name, class_name): 
       
+    path = Path(__file__).parent.resolve()
+
     # find_module() method is used 
     # to find the module and return 
     # its description and path 
     try: 
-        spec = importlib.machinery.PathFinder().find_spec(name, ["plugins"])
+        spec = importlib.machinery.PathFinder().find_spec(name, [str(path) + "/plugins"])
         mod = importlib.util.module_from_spec(spec)
         sys.modules[name] = mod
         spec.loader.exec_module(mod)   
