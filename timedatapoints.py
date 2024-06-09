@@ -64,7 +64,9 @@ class TimeDataPoints():
         self.persistence = persistence
 
     def execute(self):
-        self.persistence.write(time.time(), self.datapoint.get())    
+        current_time = time.localtime()
+        formatted_time = time.strftime('%Y-%m-%d %H:%M', current_time)
+        self.persistence.write(formatted_time, self.datapoint.get())
 
 # Function Call
 if __name__ == '__main__':
