@@ -1,4 +1,5 @@
 import gspread
+from pathlib import Path
     
 from oauth2client.service_account import ServiceAccountCredentials
 from persistenceinterface import PersistenceInterface
@@ -12,8 +13,9 @@ class PersistToGoogleSheets(PersistenceInterface):
                 'https://www.googleapis.com/auth/spreadsheets',
                 'https://www.googleapis.com/auth/drive.file',
                 'https://www.googleapis.com/auth/drive']
-        # Reading Credentails from ServiceAccount Keys file
-        credentials = ServiceAccountCredentials.from_json_keyfile_name(CREDENTIALS_FILE, scope)
+        # Reading Credentials from ServiceAccount Keys file
+        credentialsPath = str(Path(__file__).parent.resolve()) + '/' + CREDENTIALS_FILE
+        credentials = ServiceAccountCredentials.from_json_keyfile_name(credentialsPath, scope)
         # intitialize authorization object
         gc = gspread.authorize(credentials)
         # Open Google Sheets file
