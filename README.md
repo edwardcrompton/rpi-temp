@@ -20,6 +20,10 @@ Go to https://console.cloud.google.com
 Set up a project
 Export credentials to a file and rename it key.json in this folder.
 
+### Set up 1-wire interface
+This is required if the plugin you're using reads data from a 1-wire device.
+https://www.raspberrypi-spy.co.uk/2018/02/enable-1-wire-interface-raspberry-pi/
+
 ## Running
 `python timedatapoints.py`
 
