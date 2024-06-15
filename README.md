@@ -24,6 +24,17 @@ Export credentials to a file and rename it key.json in this folder.
 This is required if the plugin you're using reads data from a 1-wire device.
 https://www.raspberrypi-spy.co.uk/2018/02/enable-1-wire-interface-raspberry-pi/
 
+### Redis Queue
+If the persistence class plugin you are using uses Redis Queue, that will need
+to be installed on the system:
+
+`sudo apt-get install redis-server`
+
+A redis queue worker will also need to be running. This should be set up to run
+on boot of the system:
+
+`rq worker --with-scheduler`
+
 ## Running
 `python timedatapoints.py`
 
