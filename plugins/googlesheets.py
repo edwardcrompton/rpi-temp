@@ -1,6 +1,6 @@
 import gspread
 from pathlib import Path
-from redis import redis
+from redis import Redis
 from rq import Queue
     
 from oauth2client.service_account import ServiceAccountCredentials
