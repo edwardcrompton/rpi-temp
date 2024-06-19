@@ -61,7 +61,7 @@ def dynamic_imp(name, class_name):
 class TimeDataPoints():
     def __init__(self, datapoint: DatapointInterface, persistence: PersistenceInterface):
         self.datapoint = datapoint
-        self.persistence = persistence
+        self.persistence = persistence()
 
     def execute(self):
         current_time = time.localtime()

@@ -1,3 +1,3 @@
 class PersistenceInterface:
-    def write(timestamp, datapoint):
+    def write(self, timestamp, datapoint):
         pass

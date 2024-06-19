@@ -2,12 +2,13 @@ import gspread
 from pathlib import Path
 from redis import Redis
 from rq import Queue
+from rq import Retry
     
 from oauth2client.service_account import ServiceAccountCredentials
 from persistenceinterface import PersistenceInterface
 
 class PersistToGoogleSheets(PersistenceInterface):
-    def write(timestamp, datapoint):
+    def process(timestamp, datapoint):
         CREDENTIALS_FILE = "key.json"
         TEMPERATURE_DOC = "TemperatureLL208DY"
 
@@ -27,6 +28,6 @@ class PersistToGoogleSheets(PersistenceInterface):
         except Exception as e: print(e)
         return
 
-    def queue(timestamp, datapoint):
+    def write(self, timestamp, datapoint):
         q = Queue(connection=Redis())
-        result = q.enqueue(write, timestamp, datapoint, retry=Retry(max=3, interval=[60, 600, 3600]))
+        result = q.enqueue(self.process, timestamp, datapoint, retry=Retry(max=3, interval=[60, 600, 3600]))
