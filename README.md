@@ -56,7 +56,7 @@ need to be installed on the system:
 A redis queue worker will also need to be running. This should be set up to run
 on boot of the system:
 
-`rq worker`
+`rq worker --with-scheduler`
 
 ## Running
 `python timedatapoints.py`
