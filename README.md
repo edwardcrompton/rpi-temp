@@ -1,21 +1,41 @@
 # rpi-temp
 
-Wrapper for the Raspberry Pi temperature monitor
+Writes a datapoint (e.g. the current temperature) to some location (e.g. a file
+or API) along with a timestamp.
 
-Loads modules from the plugins folder:
+For example, this can be run on cron to write the current temperature from a
+raspberry pi thermometer to a Google spreadsheet. However, it could be used to
+write any time sensitive data to any location.
 
- - A data point module. This is used to fetch the datapoint we want to write
-somewhere with a timestamp.
+Different modules can be used to specify what data is recorded and where it is
+written.
 
- - A persistence module. This is used to write the datapoint and the timestamp
-somewhere where it will be persisted, e.g the Google Sheets API.
+Loads two modules from this folder:
+- a datapoint module to fetch a datapoint from some logic or a sensor such as a
+thermometer.
+- a persistence module to write this data somewhere with a timestamp, for
+example to a local file or a Google spreadsheet via the Google API.
+
+The modules are specified at run time. Additional datapoint or persistence
+modules can be added to this folder.
+
+## Example commands
+These commands are available with the current modules.
+
+Write a timestamp and random number to a file:
+
+`PERSISTENCEMOD="file" DATAPOINTMOD="number" python timedatapoints.py`
+
+Write a timestamp and random number to a Google spreadsheet:
+
+`PERSISTENCEMOD="googlesheets" DATAPOINTMOD="number" python timedatapoints.py`
+
+Write a timestamp and the temperature read from an attached thermometer to a
+Google spreadsheet:
+
+`PERSISTENCEMOD="googlesheets" DATAPOINTMOD="temperature" python timedatapoints.py`
 
 ## Setup
-
-### Set the modules names for the environment.
-`export PERSISTENCEMOD="googlesheets"`
-
-`export DATAPOINTMOD="temperature"`
 
 ### Set up Google Sheets API authentication
 Go to https://console.cloud.google.com
@@ -28,15 +48,15 @@ This is required if the plugin you're using reads data from a 1-wire device.
 https://www.raspberrypi-spy.co.uk/2018/02/enable-1-wire-interface-raspberry-pi/
 
 ### Redis Queue
-If the persistence class plugin you are using uses Redis Queue, that will need
-to be installed on the system:
+The file and googlesheets persistence class modules use Redis Queue, which will
+need to be installed on the system:
 
 `sudo apt-get install redis-server`
 
 A redis queue worker will also need to be running. This should be set up to run
 on boot of the system:
 
-`rq worker --with-scheduler`
+`rq worker`
 
 ## Running
 `python timedatapoints.py`
@@ -44,10 +64,10 @@ on boot of the system:
 Based on https://hands-on.cloud/python-google-sheets-api/?utm_content=cmp-true
 which also describes how to get up the Google API for this to work.
 
-### Plugins
-Additional modules can be added to the plugins directory to provide different
-persistence and datapoint functionality. Just change the values of
-PERSISTENCEMOD and DATAPOINTMOD to contain the name of the module.
+### Plugin modules
+Additional modules can be added to provide different persistence and datapoint
+functionality. Just change the values of PERSISTENCEMOD and DATAPOINTMOD to
+contain the name of the module.
 
 Datapoint modules must implement a function called write().
-Persistence plugins must implement a function called get().
+Persistence modules must implement a function called get().
