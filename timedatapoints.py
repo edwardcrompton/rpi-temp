@@ -8,8 +8,11 @@ from pathlib import Path
 
 def main():
     # Get environment configuration
+    # @todo Let's make these arguments passed when the python script is called
+    # instead of environment variables?
     datapointmod = os.environ.get('DATAPOINTMOD')
     persistencemod = os.environ.get('PERSISTENCEMOD')
+    period = 60
     
     if datapointmod is None or persistencemod is None:
         if datapointmod is None:
@@ -26,8 +29,12 @@ def main():
     # Load the persistence class
     persistence = dynamic_imp(persistencemod)
 
-    # Get the datapoint and write it to the persistence.
-    execute(datapoint, persistence)
+    # Get the datapoint and write it to the persistence every number of seconds
+    # defined by the period variable.
+    starttime = time.monotonic()
+    while True:
+        execute(datapoint, persistence)
+        time.sleep(period - ((time.monotonic() - starttime) % period))
 
 # dynamic import  
 def dynamic_imp(name): 

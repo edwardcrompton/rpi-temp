@@ -1,11 +1,11 @@
 # rpi-temp
 
 Writes a datapoint (e.g. the current temperature) to some location (e.g. a file
-or API) along with a timestamp.
+or API) along with a timestamp, repeating after a certain period of seconds.
 
-For example, this can be run on cron to write the current temperature from a
-raspberry pi thermometer to a Google spreadsheet. However, it could be used to
-write any time sensitive data to any location.
+For example, this can be used to write the current temperature from a raspberry
+pi thermometer to a Google spreadsheet at a specified time interval. However,
+it could be used to write any time sensitive data to any location.
 
 Different modules can be used to specify what data is recorded and where it is
 written.
