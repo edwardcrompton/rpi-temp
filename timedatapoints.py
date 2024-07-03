@@ -32,8 +32,10 @@ def main():
     # Get the datapoint and write it to the persistence every number of seconds
     # defined by the period variable.
     starttime = time.monotonic()
+    previous_job = None
     while True:
-        execute(datapoint, persistence)
+        job = execute(datapoint, persistence, previous_job)
+        previous_job = job
         time.sleep(period - ((time.monotonic() - starttime) % period))
 
 # dynamic import  
@@ -47,10 +49,10 @@ def dynamic_imp(name):
         print ("module not found: " + name)
 
 
-def execute(datapoint, persistence):
+def execute(datapoint, persistence, previous_job):
     current_time = time.localtime()
     formatted_time = time.strftime('%Y-%m-%d %H:%M', current_time)
-    persistence.write(formatted_time, datapoint.get())
+    return persistence.write(formatted_time, datapoint.get(), previous_job)
 
 # Function Call
 if __name__ == '__main__':

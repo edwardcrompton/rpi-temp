@@ -26,6 +26,12 @@ def process(timestamp, datapoint):
     except Exception as e: print(e)
     return
 
-def write(timestamp, datapoint):
+def write(timestamp, datapoint, previous_job):
     q = Queue(connection=Redis())
-    result = q.enqueue(process, timestamp, datapoint, retry=Retry(max=3, interval=[60, 600, 3600]))
+    result = q.enqueue(process,
+        timestamp,
+        datapoint,
+        retry=Retry(max=3, interval=[60, 600, 3600]),
+        depends_on = previous_job)
+
+    return result
