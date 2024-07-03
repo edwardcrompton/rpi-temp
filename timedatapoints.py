@@ -31,12 +31,7 @@ def main():
 
 # dynamic import  
 def dynamic_imp(name): 
-      
-    path = Path(__file__).parent.resolve()
 
-    # find_module() method is used 
-    # to find the module and return 
-    # its description and path 
     try:
         mod = __import__(name)
         return mod
