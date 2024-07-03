@@ -53,8 +53,8 @@ need to be installed on the system:
 
 `sudo apt-get install redis-server`
 
-A redis queue worker will also need to be running. This should be set up to run
-on boot of the system:
+A redis queue worker will also need to be running. **This should be run from the
+root folder of this codebase:**
 
 `rq worker --with-scheduler`
 
