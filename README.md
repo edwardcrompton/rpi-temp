@@ -58,11 +58,29 @@ root folder of this codebase:**
 
 `rq worker --with-scheduler`
 
+or, as a service with
+
+```
+sudo cp rqworker@.service /lib/systemd/system/rqworker@.service
+sudo systemctl daemon-reload
+sudo systemctl enable rqworker@1
+sudo systemctl start rqworker@1
+```
+
 ## Running
 `python timedatapoints.py`
 
 Based on https://hands-on.cloud/python-google-sheets-api/?utm_content=cmp-true
 which also describes how to get up the Google API for this to work.
+
+### As a service
+
+```
+sudo cp timedatapoints.service /lib/systemd/system/timedatapoints.service
+sudo systemctl daemon-reload
+sudo systemctl enable hello.service
+sudo systemctl start hello.service
+```
 
 ### Plugin modules
 Additional modules can be added to provide different persistence and datapoint
