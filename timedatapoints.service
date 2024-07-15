@@ -1,0 +1,11 @@
+[Unit]
+Description=Time Datapoints Service
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/home/edward/rpi-temp/bin/python /home/edward/rpi-temp/timedatapoints.py
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
