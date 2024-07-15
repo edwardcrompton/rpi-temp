@@ -4,6 +4,7 @@ After=multi-user.target
 
 [Service]
 Type=simple
+Environment="DATAPOINTMOD=temperature" "PERSISTENCEMOD=googlesheets"
 ExecStart=/home/edward/rpi-temp/bin/python /home/edward/rpi-temp/timedatapoints.py
 Restart=on-abort
 
