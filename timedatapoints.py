@@ -12,7 +12,7 @@ def main():
     # instead of environment variables?
     datapointmod = os.environ.get('DATAPOINTMOD')
     persistencemod = os.environ.get('PERSISTENCEMOD')
-    period = 60
+    period = os.environ.get('DATAPOINTPERIOD')
     
     if datapointmod is None or persistencemod is None:
         if datapointmod is None:
@@ -23,11 +23,19 @@ def main():
         
         quit()
 
+    if period is None or period == 0:
+        print('Please add the DATAPOINTPERIOD env var.')
+
+        quit()
+
     # Load the datapoint class
     datapoint = dynamic_imp(datapointmod)
 
     # Load the persistence class
     persistence = dynamic_imp(persistencemod)
+
+    # Set the logging period
+    period = int(period)
 
     # Get the datapoint and write it to the persistence every number of seconds
     # defined by the period variable.
