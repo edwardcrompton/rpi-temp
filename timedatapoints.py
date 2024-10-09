@@ -6,67 +6,61 @@ import sys
 import time
 from pathlib import Path
 
-from datapointinterface import DatapointInterface
-from persistenceinterface import PersistenceInterface
-
 def main():
     # Get environment configuration
-    datapointclass = os.environ.get('DATAPOINTCLASS') # E.g. datapoint.datapoint
-    persistenceclass = os.environ.get('PERSISTENCECLASS')
+    # @todo Let's make these arguments passed when the python script is called
+    # instead of environment variables?
+    datapointmod = os.environ.get('DATAPOINTMOD')
+    persistencemod = os.environ.get('PERSISTENCEMOD')
+    period = os.environ.get('DATAPOINTPERIOD')
     
-    if datapointclass is None or persistenceclass is None:
-        if datapointclass is None:
-            print('Please add the DATAPOINTCLASS env var.')
+    if datapointmod is None or persistencemod is None:
+        if datapointmod is None:
+            print('Please add the DATAPOINTMOD env var.')
     
-        if persistenceclass is None:
-            print('Please add the PERSISTENCECLASS env var.')
+        if persistencemod is None:
+            print('Please add the PERSISTENCEMOD env var.')
         
         quit()
 
+    if period is None or period == 0:
+        print('Please add the DATAPOINTPERIOD env var.')
+
+        quit()
+
     # Load the datapoint class
-    datapoint = dynamic_imp(*datapointclass.split('.'))
+    datapoint = dynamic_imp(datapointmod)
 
     # Load the persistence class
-    persistence = dynamic_imp(*persistenceclass.split('.'))
+    persistence = dynamic_imp(persistencemod)
 
-    # Get the datapoint and write it to the persistence.
-    timedatapoints = TimeDataPoints(datapoint, persistence)
-    timedatapoints.execute()
+    # Set the logging period
+    period = int(period)
+
+    # Get the datapoint and write it to the persistence every number of seconds
+    # defined by the period variable.
+    starttime = time.monotonic()
+    previous_job = None
+    while True:
+        job = execute(datapoint, persistence, previous_job)
+        previous_job = job
+        time.sleep(period - ((time.monotonic() - starttime) % period))
 
 # dynamic import  
-def dynamic_imp(name, class_name): 
-      
-    path = Path(__file__).parent.resolve()
+def dynamic_imp(name): 
 
-    # find_module() method is used 
-    # to find the module and return 
-    # its description and path 
-    try: 
-        spec = importlib.machinery.PathFinder().find_spec(name, [str(path) + "/plugins"])
-        mod = importlib.util.module_from_spec(spec)
-        sys.modules[name] = mod
-        spec.loader.exec_module(mod)   
+    try:
+        mod = __import__(name)
+        return mod
 
     except ImportError: 
         print ("module not found: " + name)
-          
-    try:
-        loaded_class = getattr(mod, class_name)
-    
-    except Exception:
-        print ("class not found %s.%s", name, class_name)
 
-    return loaded_class
 
-class TimeDataPoints():
-    def __init__(self, datapoint: DatapointInterface, persistence: PersistenceInterface):
-        self.datapoint = datapoint
-        self.persistence = persistence
-
-    def execute(self):
-        current_time = time.localtime()
-        formatted_time = time.strftime('%Y-%m-%d %H:%M', current_time)
-        self.persistence.write(formatted_time, self.datapoint.get())
+def execute(datapoint, persistence, previous_job):
+    current_time = time.localtime()
+    formatted_time = time.strftime('%Y-%m-%d %H:%M', current_time)
+    return persistence.write(formatted_time, datapoint.get(), previous_job)
 
 # Function Call
 if __name__ == '__main__':
