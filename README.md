@@ -44,13 +44,13 @@ This is how it's run manually at the command line:
 
 I'm using Google Sheets API because it's free and has a simple API.
 
-- 1. Go to https://console.cloud.google.com
-- 2. Set up a project
-- 3. Export credentials to a file and rename it key.json. 
-- 4. Copy key.json to this folder.
+1. Go to https://console.cloud.google.com
+2. Set up a project
+3. Export credentials to a file and rename it key.json.
+4. Copy key.json to this folder.
 
 Based on https://hands-on.cloud/python-google-sheets-api/?utm_content=cmp-true
-which also describes how to get up the Google API for this to work.
+which also describes how to set up the Google API for this to work.
 
 ### Set up 1-wire interface on the Raspberry Pi
 This is required if the plugin you're using reads data from a 1-wire device.

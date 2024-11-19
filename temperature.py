@@ -12,7 +12,7 @@ def get():
     tempread = subprocess.getoutput('cat ' + str(path) + '/thermometer')
     # Format
     #temp = subprocess.getoutput('echo "scale=2; "\`echo ${tempread##*=}\`" / 1000" | bc')
-    temp = re.search('t=([0-9]*)', tempread)
+    temp = re.search('t=([-0-9]*)', tempread)
 
     # Output
     return temp[1]
