@@ -52,6 +52,9 @@ I'm using Google Sheets API because it's free and has a simple API.
 Based on https://hands-on.cloud/python-google-sheets-api/?utm_content=cmp-true
 which also describes how to set up the Google API for this to work.
 
+[Todo: Add here how the project email address needs to be added to the
+Google sheet with permission to edit.]
+
 ### Set up 1-wire interface on the Raspberry Pi
 This is required if the plugin you're using reads data from a 1-wire device.
 https://www.raspberrypi-spy.co.uk/2018/02/enable-1-wire-interface-raspberry-pi/
